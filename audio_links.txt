@@ -1,0 +1,3 @@
+https://example.com/song1.mp3
+https://cdn.music.com/track2.mp3
+https://mysite.org/audio/summer.mp3
