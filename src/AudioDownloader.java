@@ -9,6 +9,9 @@ public class AudioDownloader {
     private static final String DOWNLOAD_DIRECTORY = "downloads/";
     private static final String URL_LIST_FILE = "audio_links.txt";
 
+
+    private static final String PLAYER_PATH = "cmd"; // будет использоваться через cmd /c start
+
     public static void main(String[] args) {
         try {
             Files.createDirectories(Paths.get(DOWNLOAD_DIRECTORY));
@@ -23,18 +26,26 @@ public class AudioDownloader {
                     }
 
                     String outputPath = DOWNLOAD_DIRECTORY + "audio_" + fileIndex + ".mp3";
+                    File outputFile = new File(outputPath);
 
                     try {
                         fetchAudioFile(currentUrl, outputPath);
                         System.out.println("Успешно загружено: " + outputPath);
+
+                        ProcessBuilder pb = new ProcessBuilder(
+                                "cmd", "/c", "start", "", outputPath
+                        );
+                        pb.start();
+                        System.out.println("Файл запущен через системный плеер.");
+
                         fileIndex++;
                     } catch (IOException e) {
-                        System.err.println("Ошибка загрузки: " + currentUrl + " — " + e.getMessage());
+                        System.err.println("Ошибка при загрузке или воспроизведении: " + currentUrl + " — " + e.getMessage());
                     }
                 }
             }
 
-            System.out.println("Все доступные треки обработаны.");
+            System.out.println("Все треки обработаны.");
 
         } catch (IOException e) {
             System.err.println("Критическая ошибка при запуске: " + e.getMessage());
