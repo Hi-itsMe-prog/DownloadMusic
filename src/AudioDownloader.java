@@ -45,7 +45,6 @@ public class AudioDownloader {
                 }
             }
 
-            System.out.println("Все треки обработаны.");
 
         } catch (IOException e) {
             System.err.println("Критическая ошибка при запуске: " + e.getMessage());
